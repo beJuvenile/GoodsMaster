@@ -1,10 +1,14 @@
 <style scoped>
     .layout{
+        height: 100%;
         border: 1px solid #d7dde4;
         background: #f5f7f9;
         position: relative;
         border-radius: 4px;
         overflow: hidden;
+    }
+    .ivu-row-flex{
+        height: 100%;
     }
     .layout-breadcrumb{
         padding: 10px 15px 0;
@@ -31,6 +35,9 @@
         height: 60px;
         background: #fff;
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+    .layout-header>.ivu-menu>li:last-child{
+        float: right;
     }
     .layout-logo-left{
         width: 90%;
@@ -71,9 +78,47 @@
             </Col>
             <Col :span="spanRight">
                 <div class="layout-header">
-                    <Button type="text" @click="toggleClick">
-                        <Icon type="navicon" size="32"></Icon>
-                    </Button>
+                    <Menu mode="horizontal" :theme="menuTheme" active-name="1">
+                        <MenuItem name="0">
+                            <Button type="text" @click="toggleClick">
+                                <Icon type="navicon" size="32"></Icon>
+                            </Button>
+                        </MenuItem>
+                        <MenuItem name="1">
+                            <Icon type="ios-paper"></Icon>
+                            内容管理
+                        </MenuItem>
+                        <MenuItem name="2">
+                            <Icon type="ios-people"></Icon>
+                            用户管理
+                        </MenuItem>
+                        <Submenu name="3">
+                            <template slot="title">
+                                <Icon type="stats-bars"></Icon>
+                                统计分析
+                            </template>
+                            <MenuGroup title="使用">
+                                <MenuItem name="3-1">新增和启动</MenuItem>
+                                <MenuItem name="3-2">活跃分析</MenuItem>
+                                <MenuItem name="3-3">时段分析</MenuItem>
+                            </MenuGroup>
+                            <MenuGroup title="留存">
+                                <MenuItem name="3-4">用户留存</MenuItem>
+                                <MenuItem name="3-5">流失用户</MenuItem>
+                            </MenuGroup>
+                        </Submenu>
+                        <MenuItem name="4">
+                            <Icon type="settings"></Icon>
+                            综合设置
+                        </MenuItem>
+                        <Submenu name="5">
+                            <template slot="title">
+                                <Avatar :src=userInfo.avatar />&nbsp;{{ userInfo.nickName }}
+                            </template>
+                            <MenuItem name="5-1">设置</MenuItem>
+                            <MenuItem name="5-2">退出</MenuItem>
+                        </Submenu>
+                    </Menu>
                 </div>
                 <div class="layout-breadcrumb">
                     <Breadcrumb>
@@ -82,7 +127,7 @@
                         <BreadcrumbItem>App</BreadcrumbItem>
                     </Breadcrumb>
                 </div>
-                <div class="layout-content">
+                <div class="layout-content" >
                     <div class="layout-content-main">Content</div>
                 </div>
                 <div class="layout-copy">
@@ -97,8 +142,20 @@
         data () {
             return {
                 spanLeft: 5,
-                spanRight: 19
+                spanRight: 19,
+                menuTheme: 'light',
+                userInfo: {
+                    nickName: 'Ken.Zhang',
+                    avatar: 'https://i.loli.net/2017/08/21/599a521472424.jpg'
+                }
             };
+        },
+        created: function () {
+            // 页面高度计算
+
+        },
+        mounted: function () {
+
         },
         computed: {
             iconSize () {
