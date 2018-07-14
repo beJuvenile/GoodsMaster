@@ -8,6 +8,7 @@ export default new Vuex.Store({
         // 网站基础信息
         webBaseInfo: {
             title: '',
+            keywords: '',
             description: '',
             webDomain: '',
             customServiceQQ: '',
@@ -25,6 +26,7 @@ export default new Vuex.Store({
         // 初始化网站基础信息
         webInit (state, obj) {
             state.webBaseInfo.title = obj.title;
+            state.webBaseInfo.keywords = obj.keywords;
             state.webBaseInfo.description = obj.description;
             state.webBaseInfo.webDomain = obj.webDomain;
             state.webBaseInfo.customServiceQQ = obj.customServiceQQ;

@@ -78,7 +78,7 @@
             </Col>
             <Col :span="spanRight">
                 <div class="layout-header">
-                    <Menu mode="horizontal" :theme="menuTheme" active-name="1">
+                    <Menu mode="horizontal" :theme="menuTheme" >
                         <MenuItem name="0">
                             <Button type="text" @click="toggleClick">
                                 <Icon type="navicon" size="32"></Icon>
