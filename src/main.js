@@ -21,6 +21,8 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
+    let data = Util.initBaseWeb();
+    console.log(data);
     Util.title(to.meta.title);
     next();
 });

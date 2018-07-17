@@ -6,7 +6,7 @@ let config = {
 };
 
 config = config.env === 'production' ?
-    config.concat(Production) :
-    config.concat(Development);
+    Object.assign(config, Production) :
+    Object.assign(config, Development);
 
 export default config;
