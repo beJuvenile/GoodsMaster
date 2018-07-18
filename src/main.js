@@ -21,10 +21,17 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    let data = Util.initBaseWeb();
-    console.log(data);
-    Util.title(to.meta.title);
-    next();
+	// 初始化网站
+	util.initBaseWeb()
+		.then(function(res){
+			Util.title(to.meta.title);
+			next();
+		})
+		.catch(function(error){
+			// 跳转到系统关闭页面
+			
+		});
+    
 });
 
 router.afterEach(() => {
