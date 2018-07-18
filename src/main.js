@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import store from './store';
+import Store from './store';
 import iView from 'iview';
 import VueRouter from 'vue-router';
 import Routers from './router';
@@ -21,17 +21,27 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
+    console.log(Store.state.webBaseInfo, Store.state.webInit);
 	// 初始化网站
-	util.initBaseWeb()
-		.then(function(res){
-			Util.title(to.meta.title);
-			next();
-		})
-		.catch(function(error){
-			// 跳转到系统关闭页面
-			
-		});
-    
+    Util.initBaseWeb(Store).then(function (ret) {
+        Util.title(to.meta.title);
+
+        if (to.path === '/404' || to.path === '/prompt' || ret.status) {
+            next();
+        } else {
+            to.params.msg = ret.msg;
+            next('/prompt');
+        }
+    }).catch(function (err) {
+        Util.title(to.meta.title);
+
+        if (to.path === '/404' || to.path === '/prompt' || err.status) {
+            next();
+        } else {
+            to.params.msg = err.msg;
+            next('/prompt');
+        }
+    });
 });
 
 router.afterEach(() => {
@@ -42,6 +52,6 @@ router.afterEach(() => {
 new Vue({
     el: '#app',
     router: router,
-    store: store,
+    store: Store,
     render: h => h(App)
 });

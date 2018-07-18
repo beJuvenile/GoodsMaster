@@ -10,6 +10,7 @@ export default new Vuex.Store({
         // 网站基础信息
         webBaseInfo: {
             title: '',
+            slogon: '',
             keywords: '',
             description: '',
             webDomain: '',
@@ -40,6 +41,7 @@ export default new Vuex.Store({
         // 初始化网站基础信息
         webBaseInit (state, obj) {
             state.webBaseInfo.title = obj.title;
+            state.webBaseInfo.slogon = obj.slogon;
             state.webBaseInfo.keywords = obj.keywords;
             state.webBaseInfo.description = obj.description;
             state.webBaseInfo.webDomain = obj.webDomain;
@@ -52,9 +54,6 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        // 初始化网站基础信息
-        webInit (context) {
-            context.commit('webInit');
-        }
+
     }
 });

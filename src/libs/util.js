@@ -14,35 +14,35 @@ util.ajax = axios.create({
 });
 
 // 初始化网站
-util.initBaseWeb = function () {
-	return new promise(function(resolve, reject, store) {
-		if (!store.state.webInit) {
-			util.ajax.get('/v1/init/web',{})
-				.then(function (response) {
-					console.log(response);
-					let ret = response.data;
+util.initBaseWeb = function (store) {
+	return new Promise((resolve, reject) => {
 
-					if (ret.retCode == 20000) {
-						store.commit('webInitStatus', true);
-						store.commit('webBaseInit', ret.retData.Value);
-					} else {
-						store.commit('webInitStatus', false);
-					}
-					resolve(store.getters.getSystemRunStatus);
-				})
-				.catch(function (error) {
-					store.commit('webInitStatus', false);
-					rejiect(store.getters.getSystemRunStatus)
-				});
-			});
+        if (!store.state.webInit) {
+            util.ajax.get('/v1/init/web')
+                .then(function (response) {
+                    let ret = response.data;
+
+                    if (ret.retCode === 20000) {
+                        store.commit('webInitStatus', true);
+                        store.commit('webBaseInit', ret.retData.Value);
+                    } else {
+                        store.commit('webInitStatus', false);
+                    }
+                    resolve(store.getters.getSystemRunStatus);
+                })
+                .catch(function (error) {
+                    store.commit('webInitStatus', false);
+                    reject(store.getters.getSystemRunStatus)
+                });
 		} else {
 			resolve(store.getters.getSystemRunStatus)
 		}
-	}
+	});
 };
 
 util.title = function(title) {
-    title = title ? title + ' - Home' : 'iView project';
+    title = title ? title + ' - ' : store.state.title;
+    title += store.state.webBaseInfo.slogon;
     window.document.title = title;
 };
 
