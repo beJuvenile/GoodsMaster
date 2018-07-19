@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../config/config';
-import store from '../store';
+import localStore from './localStore';
 
 let util = {
 
@@ -14,38 +14,63 @@ util.ajax = axios.create({
 });
 
 // 初始化网站
-util.initBaseWeb = function (store) {
+util.initBaseWeb = function () {
 	return new Promise((resolve, reject) => {
-
-        if (!store.state.webInit) {
+        if (!localStore.getItem('webInitStatus')) {
             util.ajax.get('/v1/init/web')
                 .then(function (response) {
                     let ret = response.data;
 
                     if (ret.retCode === 20000) {
-                        store.commit('webInitStatus', true);
-                        store.commit('webBaseInit', ret.retData.Value);
+                        localStore.setItem('webInitStatus', true);
+                        localStore.setItem('webBaseData', ret.retData.Value);
                     } else {
-                        store.commit('webInitStatus', false);
+                        localStore.setItem('webInitStatus', false);
                     }
-                    resolve(store.getters.getSystemRunStatus);
+                    resolve(util.getSystemRunStatus(localStore));
                 })
                 .catch(function (error) {
-                    store.commit('webInitStatus', false);
-                    reject(store.getters.getSystemRunStatus)
+                    localStore.setItem('webInitStatus', false);
+                    reject(util.getSystemRunStatus(localStore))
                 });
 		} else {
-			resolve(store.getters.getSystemRunStatus)
+			resolve(util.getSystemRunStatus(localStore));
 		}
 	});
 };
 
 util.title = function(title) {
-    title = title ? title + ' - ' : store.state.title;
-    title += store.state.webBaseInfo.slogon;
+    title = title ? title + ' - ' : this.getWebTitle(localStore);
+    title += this.getWebSlogon();
     window.document.title = title;
 };
+/*--------------------- 函数封装 ----------------------*/
+// 获取系统状态
+util.getSystemRunStatus = function() {
+    let webInfo = localStore.getItem('webBaseData')
+        ,result = {};
 
+    if (webInfo) {
+        result.status = webInfo.webState;
+        result.msg = webInfo.webCloseMsg;
+    } else {
+        result.status = false;
+        result.msg = '系统异常，请联系管理员'
+    }
 
+    return result;
+};
+// 获取网站名称
+util.getWebTitle = function () {
+    let webInfo = localStore.getItem('webBaseData');
+
+    return webInfo ? webInfo.title : '';
+};
+// 获取网站标题
+util.getWebSlogon = function () {
+    let webInfo = localStore.getItem('webBaseData');
+
+    return webInfo ? webInfo.slogon : '';
+};
 
 export default util;

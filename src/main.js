@@ -1,10 +1,11 @@
 import Vue from 'vue';
-import Store from './store';
+import Store from './libs/store';
 import iView from 'iview';
 import VueRouter from 'vue-router';
 import Routers from './router';
 import Util from './libs/util';
 import App from './app.vue';
+import LocalStore from './libs/localStore';
 import 'iview/dist/styles/iview.css';
 
 
@@ -21,9 +22,9 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    console.log(Store.state.webBaseInfo, Store.state.webInit);
+
 	// 初始化网站
-    Util.initBaseWeb(Store).then(function (ret) {
+    Util.initBaseWeb(LocalStore).then(function (ret) {
         Util.title(to.meta.title);
 
         if (to.path === '/404' || to.path === '/prompt' || ret.status) {
