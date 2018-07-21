@@ -1,7 +1,7 @@
 const routers = [{
     path: '/',
     meta: {
-        title: 'MuBai'
+        title: '用户登录'
     },
     component: (resolve) => require(['./views/index.vue'], resolve)
 },{

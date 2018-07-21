@@ -6,11 +6,14 @@ import Routers from './router';
 import Util from './libs/util';
 import App from './app.vue';
 import LocalStore from './libs/localStore';
+import Common from './libs/common';
 import 'iview/dist/styles/iview.css';
 
 
 Vue.use(VueRouter);
 Vue.use(iView);
+Vue.use(LocalStore);
+Vue.use(Common);
 
 
 // 路由配置
@@ -24,7 +27,7 @@ router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
 
 	// 初始化网站
-    Util.initBaseWeb(LocalStore).then(function (ret) {
+    Util.initBaseWeb().then(function (ret) {
         Util.title(to.meta.title);
 
         if (to.path === '/404' || to.path === '/prompt' || ret.status) {
@@ -53,6 +56,5 @@ router.afterEach(() => {
 new Vue({
     el: '#app',
     router: router,
-    store: Store,
     render: h => h(App)
 });

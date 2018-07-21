@@ -3,16 +3,20 @@
 // |-------------------------------------------------
 // | Author: beJuvenile
 // | Date: 2018.07.19
+// | Version: 0.0.1
 // |-------------------------------------------------
 
 let localStore = {};
 let store = window.localStorage;
 
+// 安装方法
+localStore.install = function (Vue) {
+    Object.defineProperty(Vue.prototype, '$localStore', {value: localStore});
+};
 // 检测是否支持localStorage
 localStore.isSupportLocalStorage = function () {
     return !!window.localStorage;
 };
-
 // 数据存入
 localStore.setItem = function (key, value) {
     store.setItem(key, this.valueTransformString(value));

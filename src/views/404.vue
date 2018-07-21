@@ -34,11 +34,12 @@
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
                 <h1>
-                    <img src="https://raw.githubusercontent.com/iview/iview/master/assets/logo.png">
+                    <img :src="alertImg">
                 </h1>
                 <h2>
-                    <p>Welcome to your iView app!</p>
-                    <Button type="ghost" @click="handleStart">Start iView</Button>
+                    <p>{{ alertMsg }}</p>
+                    <Button type="ghost" @click="previousPage">返回上一页</Button>
+                    <Button type="ghost" @click="homePage">首页</Button>
                 </h2>
             </Col>
         </Row>
@@ -46,12 +47,30 @@
 </template>
 <script>
     export default {
+        data() {
+            return {
+                alertMsg: '',
+                alertImg: 'https://raw.githubusercontent.com/iview/iview/master/assets/logo.png',
+                // prevPageUrl: '',
+                // homePageUrl: '',
+            };
+        },
+        created() {
+            // 提示信息
+            if (!this.$common.isUndefined(this.$route.params.msg)) {
+                this.alertMsg = this.$route.params.msg;
+            }
+            // 管理主页
+            // let webInfo = this.$localStore.getItem('webBaseData');
+            // if (webInfo) this.homePageUrl = webInfo.webDomain;
+
+        },
         methods: {
-            handleStart() {
-                this.$Modal.info({
-                    title: 'Bravo',
-                    content: 'Now, enjoy the convenience of iView.'
-                });
+            previousPage() {
+                this.$router.back(-1);
+            },
+            homePage() {
+                this.$router.push('/main');
             }
         }
     };

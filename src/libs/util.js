@@ -27,20 +27,20 @@ util.initBaseWeb = function () {
                     } else {
                         localStore.setItem('webInitStatus', false);
                     }
-                    resolve(util.getSystemRunStatus(localStore));
+                    resolve(util.getSystemRunStatus());
                 })
                 .catch(function (error) {
                     localStore.setItem('webInitStatus', false);
-                    reject(util.getSystemRunStatus(localStore))
+                    reject(util.getSystemRunStatus())
                 });
 		} else {
-			resolve(util.getSystemRunStatus(localStore));
+			resolve(util.getSystemRunStatus());
 		}
 	});
 };
 
 util.title = function(title) {
-    title = title ? title + ' - ' : this.getWebTitle(localStore);
+    title = title ? title + ' - ' : this.getWebTitle();
     title += this.getWebSlogon();
     window.document.title = title;
 };
