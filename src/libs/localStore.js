@@ -18,18 +18,22 @@ localStore.isSupportLocalStorage = function () {
     return !!window.localStorage;
 };
 // 数据存入
-localStore.setItem = function (key, value) {
-    store.setItem(key, this.valueTransformString(value));
+localStore.setItem = function (key, value, validity=0) {
+    store.setItem(key, this.valueTransformString(value, validity));
 };
 // 数据读取
 localStore.getItem = function (key) {
+    let result = null;
+
     if (this.isSetItem(key)) {
         let data = JSON.parse(store.getItem(key));
 
-        return data.data;
-    } else {
-        return '';
+        if (!data.timestamp || data.timestamp>this.msTimeStamp()) {
+            result = data.data;
+        }
     }
+
+    return result;
 };
 // 数据删除
 localStore.delItem = function (key) {
@@ -42,10 +46,9 @@ localStore.clear = function () {
 
 /*---------------------------  函数封装  ----------------------------*/
 // 各种类型转字符串
-localStore.valueTransformString = function(data) {
-    let result = {
-        timestamp: this.msTimeStamp()
-    };
+localStore.valueTransformString = function(data, validity) {
+    let result = {};
+    result.timestamp = validity ? this.msTimeStamp()+validity : 0;
 
     if (this.isNull(data) || this.isUndefined(data)) {
         result.data = '';

@@ -22,15 +22,15 @@ util.initBaseWeb = function () {
                     let ret = response.data;
 
                     if (ret.retCode === 20000) {
-                        localStore.setItem('webInitStatus', true);
+                        localStore.setItem('webInitStatus', true, 600);
                         localStore.setItem('webBaseData', ret.retData.Value);
                     } else {
-                        localStore.setItem('webInitStatus', false);
+                        localStore.setItem('webInitStatus', false, 600);
                     }
                     resolve(util.getSystemRunStatus());
                 })
                 .catch(function (error) {
-                    localStore.setItem('webInitStatus', false);
+                    localStore.setItem('webInitStatus', false, 600);
                     reject(util.getSystemRunStatus())
                 });
 		} else {

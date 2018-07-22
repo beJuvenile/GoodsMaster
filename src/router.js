@@ -22,5 +22,11 @@ const routers = [{
         title: '404'
     },
     component: (resolve) => require(['./views/404.vue'], resolve)
+},{
+    path: '/test',
+    meta: {
+        title: 'Test'
+    },
+    component: (resolve) => require(['./views/test.vue'], resolve)
 }];
 export default routers;
