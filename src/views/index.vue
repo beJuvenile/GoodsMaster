@@ -47,7 +47,7 @@
         </div>
         <div class="layout-content" :style="{backgroundImage: 'url('+bgImg+')', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundSize: '100% 100%'}">
 
-            <Input v-model="account.user" :autofocus="true" @on-enter="checkUser" @on-click="checkUser" icon="arrow-right-a" placeholder="用户名" style="width: 200px; position: relative; top: 210px; opacity: 0.8;"></Input>
+            <Input v-model="user.account" :autofocus="true" @on-enter="checkUser" @on-click="checkUser" icon="arrow-right-a" placeholder="用户名" style="width: 200px; position: relative; top: 210px; opacity: 0.8;"></Input>
 
         </div>
         <div class="layout-copy" v-html="copyright"></div>
@@ -59,8 +59,8 @@
             return {
                 copyright: '',
                 bgImg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532284462051&di=fb227a99dce74265c384c66905be7b22&imgtype=0&src=http%3A%2F%2Fimg.tuku.cn%2Ffile_thumb%2F201505%2Fm2015050421415301.jpg',
-                account: {
-                    user: '',
+                user: {
+                    account: '',
                     password: ''
                 }
             };
@@ -73,10 +73,19 @@
         },
         methods: {
             checkUser () {
-                console.log(this.account.user);
+                console.log(this.user.account);
+
+                this.$axios.post('/v1/user/check', {
+                    account: this.user.account
+                }).then(function (response) {
+                        console.log(response);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
             },
             userLogin () {
-                console.log(this.account);
+                console.log(this.user);
             },
         }
     };

@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import Store from './libs/store';
 import iView from 'iview';
 import VueRouter from 'vue-router';
 import Routers from './router';
@@ -15,6 +14,9 @@ Vue.use(iView);
 Vue.use(LocalStore);
 Vue.use(Common);
 
+// 实例属性
+Vue.prototype.$isLogin = false;
+Vue.prototype.$axios = Util.ajax;
 
 // 路由配置
 const RouterConfig = {
