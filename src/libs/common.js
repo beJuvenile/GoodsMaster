@@ -31,9 +31,9 @@ common.isEmpty = function (data) {
         }
         return true;
     } else if (this.isArray(data)) {
-        return !!data.length;
+        return !data.length;
     } else if (this.isNumber(data) || this.isString(data) || this.isBool(data)) {
-        return !!data;
+        return !data;
     } else if (this.isUndefined(data) || this.isNull(data)) {
         return true;
     } else {
