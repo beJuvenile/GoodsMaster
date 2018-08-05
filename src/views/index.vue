@@ -82,6 +82,9 @@
     </div>
 </template>
 <script>
+    import md5 from 'js-md5';
+    import config from '../config/config';
+
     export default {
         data: function () {
             return {
@@ -89,7 +92,8 @@
                 bgImg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532284462051&di=fb227a99dce74265c384c66905be7b22&imgtype=0&src=http%3A%2F%2Fimg.tuku.cn%2Ffile_thumb%2F201505%2Fm2015050421415301.jpg',
                 user: {
                     account: '',
-                    password: ''
+                    password: '',
+                    salt: 0
                 },
                 show: {
                     user: true,
@@ -128,6 +132,8 @@
                     if (response.data.retCode==20000) {
                         _this.show.user = false;
                         _this.show.pass = true;
+                        _this.alert.show = false;
+                        _this.user.salt = response.data.retData;
                     } else {
                         _this.show.user = true;
                         _this.show.pass = false;
@@ -147,32 +153,34 @@
                 let _this = this;
 
                 // 为空不能验证
-                if (_this.$common.isEmpty(_this.user.account)) {
-                    _this.show.user = true;
-                    _this.show.pass = false;
+                if (_this.$common.isEmpty(_this.user.password)) {
+                    _this.alert.show = true;
+                    _this.alert.type = 'info';
+                    _this.alert.msg = '密码不能为空';
 
                     return false;
                 }
 
-                _this.$axios.post('/v1/user/check', {
+                _this.$axios.post('/v1/user/login', {
                     account: _this.user.account
+                    ,password: md5(_this.user.password+config.passwordSalt[_this.user.salt])
                 }).then(function (response) {
                     if (response.data.retCode==20000) {
+                        return false;
+                        window.location.href='/main';
+                    } else {
                         _this.show.user = false;
                         _this.show.pass = true;
-                    } else {
-                        _this.show.user = true;
-                        _this.show.pass = false;
                         _this.alert.show = true;
                         _this.alert.type = 'error';
                         _this.alert.msg = response.data.retMsg;
                     }
                 }).catch(function () {
-                    _this.show.user = true;
-                    _this.show.pass = false;
+                    _this.show.user = false;
+                    _this.show.pass = true;
                     _this.alert.show = true;
                     _this.alert.type = 'error';
-                    _this.alert.msg = '验证失败';
+                    _this.alert.msg = '登录失败';
                 });
             }
         }
