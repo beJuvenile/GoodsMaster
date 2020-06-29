@@ -11,7 +11,7 @@ class Client
 
 	public $secretKey;
 
-	public $gatewayUrl = 'http://gw.api.taobao.com/router/rest';
+	public $gatewayUrl = 'https://eco.taobao.com/router/rest';
 
 	public $format = 'json';
 
