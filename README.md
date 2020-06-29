@@ -6,5 +6,15 @@
 
 ### 使用示例
 ~~~php
+use OpenSDK\TaoBao\Client;
+use OpenSDK\TaoBao\Request\TopAuthTokenCreateRequest;
 
+$c = new Client();
+$c->appkey = $this->appKey;
+$c->secretKey = $this->appSecret;
+$req = new TopAuthTokenCreateRequest();
+$req->setCode('uzIVZ0GaWGR0fON9sbqoQjRU15687760');
+$result = $c->execute($req);
+
+var_dump($result);
 ~~~
