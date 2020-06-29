@@ -1,10 +1,4 @@
-﻿<?php
-/**
- * API��ξ�̬�����
- * ���Զ�API�Ĳ������͡����ȡ����ֵ�Ƚ���У��
- *
- **/
-
+<?php
 namespace OpenSDK\TaoBao\Libs;
 
 class RequestCheckUtil

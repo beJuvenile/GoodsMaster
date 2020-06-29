@@ -6,17 +6,22 @@ use OpenSDK\TaoBao\Libs\ResultSet;
 
 class Client
 {
+
 	public $appkey;
 
 	public $secretKey;
 
 	public $gatewayUrl = 'http://gw.api.taobao.com/router/rest';
 
-	public $format = 'xml';
+	public $format = 'json';
 
 	public $connectTimeout;
 
 	public $readTimeout;
+
+	public $partnerId;
+
+	public $simplify = true;
 
 	/** 是否打开入参check**/
 	public $checkRequest = true;
@@ -208,9 +213,9 @@ class Client
 		$sysParams['sign_method'] = $this->signMethod;
 		$sysParams['method'] = $request->getApiMethodName();
 		$sysParams['timestamp'] = date('Y-m-d H:i:s');
-		if (null != $session) {
-			$sysParams['session'] = $session;
-		}
+		$session && $sysParams['session'] = $session;
+		$this->partnerId && $sysParams['partner_id'] = $this->partnerId;
+		$this->simplify && $sysParams['simplify'] = $this->simplify;
 
 		//获取业务参数
 		$apiParams = $request->getApiParas();
@@ -261,7 +266,7 @@ class Client
 		//解析TOP返回结果
 		$respWellFormed = false;
 		if ('json' == $this->format) {
-			$respObject = json_decode($resp);
+			$respObject = json_decode($resp, true);
 			if (null !== $respObject) {
 				$respWellFormed = true;
 				foreach ($respObject as $propKey => $propValue)
