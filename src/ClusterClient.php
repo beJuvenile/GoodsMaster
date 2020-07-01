@@ -5,7 +5,7 @@ namespace OpenSDK\TaoBao;
 
 use OpenSDK\TaoBao\Interfaces\Request;
 use OpenSDK\TaoBao\Libs\ApplicationVar;
-use OpenSDK\TaoBao\Libs\HttpdnsGetRequest;
+use OpenSDK\TaoBao\Request\HttpdnsGetRequest;
 
 class ClusterClient extends Client
 {
