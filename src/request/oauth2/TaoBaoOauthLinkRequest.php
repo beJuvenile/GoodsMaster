@@ -5,7 +5,7 @@
  * @link https://open.taobao.com/doc.htm?spm=a219a.7386797.0.0.63c1669aHDAI9i&source=search&docId=102635&docType=1
  */
 
-namespace OpenSDK\TaoBao\Request\Oauth;
+namespace OpenSDK\TaoBao\Request\Oauth2;
 
 
 class TaoBaoOauthLinkRequest
