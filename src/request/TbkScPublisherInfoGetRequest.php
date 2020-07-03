@@ -1,7 +1,8 @@
 <?php
 /**
  * TOP API: taobao.tbk.sc.publisher.info.get request
- * 
+ *
+ * @link https://open.taobao.com/api.htm?docId=37989&docType=2&scopeId=14474
  * @author auto create
  * @since 1.0, 2020.06.23
  */
@@ -142,10 +143,5 @@ class TbkScPublisherInfoGetRequest implements Request
 		RequestCheckUtil::checkNotNull($this->infoType,'infoType');
 		RequestCheckUtil::checkNotNull($this->relationApp,'relationApp');
 	}
-	
-	public function putOtherTextParam($key, $value)
-    {
-		$this->apiParas[$key] = $value;
-		$this->$key = $value;
-	}
+
 }

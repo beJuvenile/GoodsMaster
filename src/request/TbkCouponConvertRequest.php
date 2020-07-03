@@ -1,5 +1,6 @@
 <?php
 /**
+ * 淘宝客 - 推广者 - 高效转链
  * TOP API: taobao.appip.get request
  *
  * @link https://open.taobao.com/api.htm?spm=a219a.7386653.0.0.3d34669ac1RjHI&source=search&docId=29289&docType=2

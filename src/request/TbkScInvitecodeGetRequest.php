@@ -1,7 +1,8 @@
 <?php
 /**
  * TOP API: taobao.tbk.sc.invitecode.get request
- * 
+ *
+ * @link https://open.taobao.com/api.htm?docId=38046&docType=2&scopeId=14474
  * @author auto create
  * @since 1.0, 2019.07.04
  */
@@ -78,10 +79,5 @@ class TbkScInvitecodeGetRequest implements Request
 		RequestCheckUtil::checkNotNull($this->codeType,'codeType');
 		RequestCheckUtil::checkNotNull($this->relationApp,'relationApp');
 	}
-	
-	public function putOtherTextParam($key, $value)
-    {
-		$this->apiParas[$key] = $value;
-		$this->$key = $value;
-	}
+
 }
